@@ -1,0 +1,14 @@
+{
+    "expenses": [
+        {
+            "id": "1",
+            "value": "25.6",
+            "name": "Uber"
+        },
+        {
+            "id": "2",
+            "name": "Pen",
+            "value": "5.50"
+        }
+    ]
+}

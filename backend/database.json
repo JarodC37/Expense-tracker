@@ -1,14 +1,14 @@
 {
     "expenses": [
         {
-            "id": "1",
-            "value": "25.6",
-            "name": "Uber"
+            "id": "2",
+            "name": "Bed",
+            "value": "100.5"
         },
         {
-            "id": "2",
-            "name": "Pen",
-            "value": "5.50"
+            "id": "3",
+            "name": "Computer",
+            "value": "1500"
         }
     ]
 }

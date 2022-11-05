@@ -1,9 +1,11 @@
 const fs = require('fs');
 const express = require('express');
-const exp = require('constants');
+const cors = require('cors');
 const app = express()
 const port = 3007
 const databaseFile = './database.json'
+
+app.use(cors());
 
 const readFile = () => {
   let rawdata = fs.readFileSync(databaseFile);
@@ -11,7 +13,7 @@ const readFile = () => {
 }
 
 const addToList = (data, entry) => {
-  let newIdx = Number(data['expenses'].at(-1).id) + 1;
+  let newIdx = data['expenses'].length === 0 ? 1 : Number(data['expenses'].at(-1).id) + 1;
   data['expenses'].push({
     "id": newIdx.toString(),
     "name": entry.item,
@@ -23,7 +25,7 @@ const addToList = (data, entry) => {
 const updateItem = (data, fields) => {
   let objIdx = data['expenses'].findIndex((obj => obj.id === fields.idx))
 
-  data['expenses'][objIdx].name = fields.name;
+  data['expenses'][objIdx].name = fields.item;
   data['expenses'][objIdx].value = fields.value;
 
   return data;
@@ -38,7 +40,7 @@ const deleteFromList = (data, idx) => {
 app.get('/', (req, res) => {
   let expenseData = readFile();
   console.log(expenseData);
-  res.append('Access-Control-Allow-Origin', ['*']);
+  // res.append('Access-Control-Allow-Origin', ['*']);
   res.send(expenseData);
 })
 
@@ -51,6 +53,7 @@ app.post('/addItem', (req, res) => {
   let expenseData = readFile();
 
   fs.writeFileSync(databaseFile, JSON.stringify(addToList(expenseData, req.query), null, 4));
+  // res.append('Access-Control-Allow-Origin', ['*']);
   res.send("Record successfully updated");
 })
 
@@ -65,6 +68,7 @@ app.post('/updateItem', (req, res) => {
   
 
   fs.writeFileSync(databaseFile, JSON.stringify(updateItem(expenseData, req.query), null, 4));
+  // res.append('Access-Control-Allow-Origin', ['*']);
   res.send('Record successfully updated');
 });
 
@@ -77,6 +81,7 @@ app.post('/delete', (req, res) => {
   let expenseData = readFile();
 
   fs.writeFileSync(databaseFile, JSON.stringify(deleteFromList(expenseData, idx), null, 4));
+  // res.append('Access-Control-Allow-Origin', ['*']);
   res.send("Record successfully deleted");
 })
 

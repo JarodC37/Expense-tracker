@@ -38,6 +38,7 @@ const deleteFromList = (data, idx) => {
 app.get('/', (req, res) => {
   let expenseData = readFile();
   console.log(expenseData);
+  res.append('Access-Control-Allow-Origin', ['*']);
   res.send(expenseData);
 })
 
